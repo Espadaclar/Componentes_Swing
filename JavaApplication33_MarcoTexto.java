@@ -55,9 +55,9 @@ public class JavaApplication33_MarcoTexto extends JFrame {
 
             Oyente oyente = new Oyente();// -----------------------INSTANCIA OBJETO OYENTE
             boton.addActionListener(oyente);// ------------------- OB.OYENT A LA ESCUCHA
-            //****************************************************
+            //***************************************************************************
+            
             JPanel laminaPegada2 = new JPanel();// ----------------2º LAMINA PARA PEGAR, ZONA SUR, DE LaminaTexto()          
-            //JLabel dato2 = new JLabel(textoParaValidar);// ------dependiendo de la validez de la direccion, muesta un texto u otro.            
             laminaPegada2.add(dato2);//cuadro de texto declarado como atributo.
 
             add(laminaPegada, BorderLayout.NORTH);// ------------- PEGAMOS laminaPegada SOBRE LaminaTexto()
