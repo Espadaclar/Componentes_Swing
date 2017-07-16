@@ -9,8 +9,13 @@ import javax.swing.*;
  * @author Usuario
  */
 public class JavaApplication33_MarcoTexto extends JFrame {
- //almacena el texto que se escriva en el cuadro de texto.
-    private JTextField campo1;
+
+    private JTextField campo1;//--- almacena el texto que se escriva en el cuadro de texto.
+    private int cont;// ----------- cuenta las @ en la direccion  email.
+    private boolean validaDentroFrame;// ------ facilita comentario sobre la validez de la direcció email.
+    private String textoParaValidar;
+
+    JLabel dato2 = new JLabel();
 
     public static void main(String[] args) {
         JavaApplication33_MarcoTexto marco = new JavaApplication33_MarcoTexto();
@@ -18,7 +23,9 @@ public class JavaApplication33_MarcoTexto extends JFrame {
     }
 
     public JavaApplication33_MarcoTexto() {
-        LaminaTexto2 lamina = new LaminaTexto2();
+        textoParaValidar = "";
+
+        LaminaTexto lamina = new LaminaTexto();
         add(lamina);
 
         setBounds(100, 100, 900, 600);
@@ -30,61 +37,59 @@ public class JavaApplication33_MarcoTexto extends JFrame {
         setIconImage(image);
     }
 
-    //CLASE INTERNA PARA CREAR LAMINA DE DIBUJO
-    private class LaminaTexto2 extends JPanel {
+    ////////////////////////////////////////////////////////////////////////////CLASE INTERNA PARA CREAR LAMINA DE DIBUJO
+    private class LaminaTexto extends JPanel {
 
-        public LaminaTexto2() {
+        public LaminaTexto() {
             //asignamos el tipo de Layout a la lamina.
             setLayout(new BorderLayout());
-            LaminaTexto lamina = new LaminaTexto();
-            add(lamina, BorderLayout.NORTH);
 
+            //***************************************************************************
+            JPanel laminaPegada = new JPanel();// ----------------1º LAMINA PARA PEGAR, ZONA NORTE, DE LaminaTexto()
+            JLabel dato = new JLabel("Direccion email.-");// ------ETIQUETA
+            laminaPegada.add(dato);
+            campo1 = new JTextField(25);// -----------------------CUADRO DE TEXTO
+            laminaPegada.add(campo1);
+            JButton boton = new JButton("Validar_Direccion."); // ------------BOTON
+            laminaPegada.add(boton);
+
+            Oyente oyente = new Oyente();// -----------------------INSTANCIA OBJETO OYENTE
+            boton.addActionListener(oyente);// ------------------- OB.OYENT A LA ESCUCHA
+            //****************************************************
+            JPanel laminaPegada2 = new JPanel();// ----------------2º LAMINA PARA PEGAR, ZONA SUR, DE LaminaTexto()          
+            //JLabel dato2 = new JLabel(textoParaValidar);// ------dependiendo de la validez de la direccion, muesta un texto u otro.            
+            laminaPegada2.add(dato2);//cuadro de texto declarado como atributo.
+
+            add(laminaPegada, BorderLayout.NORTH);// ------------- PEGAMOS laminaPegada SOBRE LaminaTexto()
+            add(laminaPegada2, BorderLayout.EAST);// ------------- PEGAMOS laminaPegada2 SOBRE LaminaTexto()
         }
 
-        private class LaminaTexto extends JPanel {
+        // ************ CLASE INTERNA Y OYENTE
+        private class Oyente implements ActionListener {
 
-            public LaminaTexto() {
-                //asinamos el tipo de Layout a la lamina.
-                setLayout(new GridLayout(1, 3, 93, 9));
-
-                JLabel email = new JLabel("Direccion de correo");
-                add(email);
-                campo1 = new JTextField(20);
-                add(campo1);
-                JButton boton = new JButton("Validar dirección");
-                add(boton);
-                OyenteTexto oyente = new OyenteTexto();
-                boton.addActionListener(oyente);
-
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                comprobarDireccionEmail();
             }
 
-            //CLASE INTERNA PARA CREAR UN  OBJTO OYENTE
-            private class OyenteTexto implements ActionListener {
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    comprobarDireccionEmail();
-                }
-
-                public void comprobarDireccionEmail() {
-                    String aux = campo1.getText();
-                    int cont = 0;
-                    char[] valor = aux.toCharArray();
-                    for (int i = 0; i < valor.length; i++) {
-                        if (valor[i] == '@') {
-                            cont++;
-                        }
-                    }
-                    if (cont == 0 || cont > 1) {
-                        System.out.println("Dirección incorrecta, fallan las @");
-                    } else {
-                        System.out.println("Direccion correcta");
+            public void comprobarDireccionEmail() {
+                String aux = campo1.getText();
+                cont = 0;
+                char[] valor = aux.toCharArray();
+                for (int i = 0; i < valor.length; i++) {
+                    if (valor[i] == '@') {
+                        cont++;
                     }
                 }
+                if (cont == 0 || cont > 1) {
+                    dato2.setText("Dirección incorrecta, " + cont + " @.");
+
+                } else {
+                    dato2.setText("Direccion correcta.");
+                }
+
             }
         }
-
     }
 }
-
 
