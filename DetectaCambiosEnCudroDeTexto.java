@@ -1,8 +1,8 @@
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.text.Document;
 
 
@@ -23,67 +23,100 @@ import javax.swing.text.Document;
  */
 public class DetectaCambiosEnCudroDeTexto extends JFrame {
 
-    //DetectaCambiosEnCudroDeTexto()
-
+    
+    /**
+     * DetectaCambiosEnCudroDeTexto
+     */
     public static void main(String[] args) {
         DetectaCambiosEnCudroDeTexto marco = new DetectaCambiosEnCudroDeTexto();
         marco.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
     }
 
     public DetectaCambiosEnCudroDeTexto() {
-       
-        LaminaPrueva lamina = new LaminaPrueva();
-        add(lamina);
+        LaminaPrincipal lam = new LaminaPrincipal();
+        add(lam);
 
-        setBounds(100, 100, 900, 600);
+        setBounds(150, 100, 1000, 600);
         setVisible(true);
-        setTitle("MarcoTexto");
+        setTitle("Usuario");
 
-        Toolkit icono = Toolkit.getDefaultToolkit();
-        Image image = icono.getImage("../icono2.gif");
-        setIconImage(image);
+        Toolkit e = Toolkit.getDefaultToolkit();
+        Image icono = e.getImage("../icono2.gif");
+        setIconImage(icono);
+
     }
 
-    ////////////////////////////////////////////////////////////////////////////CLASE INTERNA PARA CREAR LAMINA DE DIBUJO
-    private class LaminaPrueva extends JPanel {
+    private class LaminaPrincipal extends JPanel {
 
-        public LaminaPrueva() {
-            JTextField campo1 = new JTextField();//--- almacena el texto que se escriva en el cuadro de texto.
-            campo1 = new JTextField(25);// -----------------------CUADRO DE TEXTO
-            //2º ponemos al cuadro de texto a la escucha; el mt 'getDocument()' aplicado a la cl 'JTextField' lo que hace es devolvernos
-            //   -- un objeto de tipo 'Documento' y a este objeto le aplicamos el mt ' addDocumentLitsener()´,
-            Document midoc = campo1.getDocument();// --almacenamos en 'midoc' el objeto de tipo 'Document'
-            // y ahora ponemos a ese documento a la escucha
-            EscuchaTexto el_evento = new EscuchaTexto();
-            midoc.addDocumentListener(el_evento );
-            
-            add(campo1);
+        private JPasswordField c_pasword;// -------definido aquí para que tenga  ambito de clase.
+        private int cuentaCaracteres;
+
+        private char[] numCarac;// -------definido aquí para que tenga  ambito de clase.
+
+        public LaminaPrincipal() {
+
+            setLayout(new BorderLayout());
+
+            JPanel lamina_superior = new JPanel();//------------------------LAMINA 1
+            lamina_superior.setLayout(new GridLayout(2, 2));
+            JLabel dato = new JLabel("Usuario.", JLabel.CENTER);
+            lamina_superior.add(dato);
+
+            JTextField c_usuario = new JTextField(20);//--------------CUADRO_T1
+            lamina_superior.add(c_usuario);
+            JLabel dato2 = new JLabel("Pasword.", JLabel.CENTER);
+            lamina_superior.add(dato2);
+
+            c_pasword = new JPasswordField(15);//--------------CUADRO_T2
+            lamina_superior.add(c_pasword);
+
+            JPanel lamina2 = new JPanel();//-------------------------LAMINA 2
+            JButton boton = new JButton(" ENVIAR ");
+            lamina2.add(boton);
+
+            //add lamina1 a laminaPricipal
+            add(lamina_superior, BorderLayout.NORTH);
+            add(lamina2, BorderLayout.SOUTH);
+
+            // --------- INSTANCIAMOS AL OYENTE
+            Comprueba_pass oyente = new Comprueba_pass();
+            Document doc = c_pasword.getDocument();
+            doc.addDocumentListener(oyente);
+
         }
 
-        // ************ CLASE INTERNA Y OYENTE
-        private class EscuchaTexto implements DocumentListener {
+        //clase interna
+        private class Comprueba_pass implements DocumentListener {
 
             @Override
             public void insertUpdate(DocumentEvent e) {
-                System.out.println("Escrito texto en CuadroDeTexto.");
+                //cuentaCaracteres++;
+                comprobarPassword();
             }
-
             @Override
             public void removeUpdate(DocumentEvent e) {
-                 System.out.println("Borrado texto en CuadroDeTexto.");
+                comprobarPassword();
             }
-
             @Override
             public void changedUpdate(DocumentEvent e) {
-               
+
             }
-
-            
-
-            
+        }
+        // ----------- para invocar desde insertUpdate(DocumentEvent e)
+        public void comprobarPassword() {
+            numCarac = c_pasword.getPassword();
+            cuentaCaracteres = numCarac.length;
+            if (cuentaCaracteres < 8 || cuentaCaracteres > 12) {
+                c_pasword.setBackground(Color.red);
+            } else {
+                c_pasword.setBackground(Color.white);
+            }
         }
     }
+
 }
+
 
 
 
