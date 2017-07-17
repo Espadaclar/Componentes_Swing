@@ -8,21 +8,10 @@ import javax.swing.text.Document;
 
 /**
  * DENTRO DE UN CUADRO DE TEXTO.
- *Para saber cuando el usuario escribe,  borra text, o saber de los cambios que 
- * puedan surgir en el texto. (negrita, cursiva, tamaño, etc)
- * 
- * Despues de crear el cuadro de texto en una lámina.
- * 
- * 1º creamos la clase receptora del evento, la cual implementa una interface- 'EscuchaTexto implements DocumentListener'
- *    --codifico su mt para que cuando escriba texto en el cuadroTxt, indique por pantalla, 'Escrito texto
- *    --y cuando borro texto en el cuadroTxt, indique por pantalla, 'Borrado texto
- * 
- * 2º ponemos al cuadro de texto a la escucha; Pero al cuadro de texto nos se le puede poner a la escucha, necesitamos
- * el mt 'getDocument()' aplicado a la cl 'JTextField' lo que hace es devolvernos el documento donde está el texto
- *    -- un objeto de tipo 'Documento' y a este objeto si se pone a la escucha, le aplicamos el mt ' addDocumentLitsener()´,
+ *Pequeña aplicación gráfica de usuario que contiene una dirección_email y el pasword, que contenDRA entre 8 y 12 caracteres.
+ *El cuadroTx del pasword estará en rojo si no tiene entre 8 y 12 caracteres
  */
 public class DetectaCambiosEnCudroDeTexto extends JFrame {
-
     
     /**
      * DetectaCambiosEnCudroDeTexto
