@@ -13,10 +13,10 @@ public class BotonesDeRadio extends JFrame{
     }
 
     public BotonesDeRadio() {
-         
+    
         Lamina_Botones_Radio lamina = new Lamina_Botones_Radio();
         add(lamina);
-        
+
         setBounds(150, 70, 900, 500);
         setVisible(true);
         setTitle("Botones de radio");
@@ -26,76 +26,48 @@ public class BotonesDeRadio extends JFrame{
         setIconImage(image);
     }
 
-    public class Lamina_Botones_Radio extends JPanel {
+    public final class Lamina_Botones_Radio extends JPanel {
 
-        private JLabel texto; 
+        private JRadioButton boton;
+        private ButtonGroup grupoBotones;
+        private JLabel texto;
         private Font asigna;
-        
+        private JPanel laminaBotones;
+
         public Lamina_Botones_Radio() {
-            
+
             setLayout(new BorderLayout());
-            
-            JPanel laminaBotones = new JPanel();
-            add(laminaBotones, BorderLayout.SOUTH);
-            JPanel laminaTexto = new JPanel();
-            add(laminaTexto, BorderLayout.NORTH);
-           
-            
+
             texto = new JLabel("MOKU YOKU SHIN TAY, SHIN YI MOKU TO GAN SHU HO, NAYGUEY KU KETSHU");
-             asigna = new Font("Serif", Font.PLAIN, 12);
+            asigna = new Font("Serif", Font.PLAIN, 13);
             texto.setFont(asigna);
-            
-            laminaTexto.add(texto);
-            add(laminaTexto, BorderLayout.NORTH);
-            //INSTANCIAS PARA DOS GRUPOS DE BOTONES
-            ButtonGroup migrupo1 = new ButtonGroup();
-            ButtonGroup migrupo2 = new ButtonGroup();
-            
-            //EL 2º PARAMETRO INDICA SI EL BOTÓN ESTARA ACTIVADO AL CREARLO.
-            JRadioButton b1 = new JRadioButton("little size",false);
-            JRadioButton b2 = new JRadioButton("mediun size",true);
-            JRadioButton b3 = new JRadioButton("big size",false);
-            
-            JRadioButton b4 = new JRadioButton("Negrita",true);
-            JRadioButton b5 = new JRadioButton("Cursiva",false);
-            
-            //AÑADE LOS BOTONES AL GRUPO CORRESPONDIENTE.
-            migrupo1.add(b1);
-            migrupo1.add(b2);
-            migrupo1.add(b3);
-            //---DATO.    LOS GRUPOS NO SE AÑADEN A LA LAMINA, SE AÑADEN LOS BOTONES.
-            laminaBotones.add(b1);
-            laminaBotones.add(b2);
-            laminaBotones.add(b3);
-            
-            migrupo2.add(b4);
-            migrupo2.add(b5);
-            laminaBotones.add(b4);
-            laminaBotones.add(b5);
-            
-            b1.addActionListener(new Oyente());
-            b2.addActionListener(new Oyente());
-            b3.addActionListener(new Oyente());
-            b4.addActionListener(new Oyente());
-            b5.addActionListener(new Oyente());
-            
-            
+
+            laminaBotones = new JPanel();
+            add(texto, BorderLayout.CENTER);// --------------------pega la el texto a la lamina.
+            add(laminaBotones, BorderLayout.SOUTH);// -------------pega la laminaBotones a la lamina.
+
+            colocarBotones("little size", false, Font.PLAIN, 10);
+            colocarBotones("mediun size", true, Font.PLAIN, 14);
+            colocarBotones("big size", false, Font.PLAIN, 20);
+            colocarBotones("Negrita", true, Font.BOLD, 13);
+            colocarBotones("Cursiva", false, Font.ITALIC, 13);
         }
-        
-        private class Oyente implements ActionListener{
+        // ------------ CADA VEZ QUE SE INVOCA SE CREA UN NUEVO BOTON QUE INCORPORA LA INTERFACE ActionListener
+        // ------------ Los dos ultimos parametros son para codificar el mt de la interface.
+        public void colocarBotones(String name, boolean activado, int style, int size) {
+            grupoBotones = new ButtonGroup();// -----------grupo al que pertenece el boton.
+            boton = new JRadioButton(name, activado);// ---caracteristicas del boton, pasadas por parametro.
+            grupoBotones.add(boton);// --------------------anade el boton al grupoDeBotones.
+            laminaBotones.add(boton);// -------------------anade el boton a la lamina de botones.
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String nameBoton = e.getActionCommand();
+            ActionListener evento = new ActionListener() {// -instamcia de un objeto interface ActionListener
 
-                if(nameBoton.equals("little size")){ texto.setFont(new Font("Serif", Font.PLAIN, 9));}                
-                else if ((nameBoton.equals("mediun size"))) texto.setFont(new Font("Serif", Font.PLAIN, 14));
-                else if ((nameBoton.equals("big size"))) texto.setFont(new Font("Serif", Font.PLAIN, 24));
-                else if ((nameBoton.equals("Negrita"))) texto.setFont(new Font("Serif", Font.BOLD, 14));
-                else if ((nameBoton.equals("Cursiva"))) texto.setFont(new Font("Serif", Font.ITALIC, 14));
-            }
-        
+                @Override
+                public void actionPerformed(ActionEvent e) {// cada vez que presiona el boton se ejecuta el codigo del mt.
+                    texto.setFont(new Font(name, style, size));
+                }
+            };
+            boton.addActionListener(evento);// -------------- interface a la escucha de cuado es presionado el boton.
         }
     }
 }
-
