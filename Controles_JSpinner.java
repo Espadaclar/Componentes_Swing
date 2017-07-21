@@ -4,10 +4,15 @@ import java.awt.event.*;
 import javax.swing.event.*;
 
 /**
- * --- Control JSpinner; es un cuadro de texto con dos botones a la derecha,
- * normalmente tiene datos de tipo número, para con estos botones incrementar o
- * disminuir esos valores numéricos. Utilizamos la cl Jspiner.
- *
+ * --- Control JSpinner; con una CLASE INTERNA ANONIMA. Consiste básicamente en que en vez de instanciar un objeto como parametro del 
+ * --- constructor, 'JSpinner(new MiModeloJspinner())' ¡¡¡CREAR LA CLASE ENTERA AHÍ DENTRO !!! 
+ * --- Te evita tener que crear la clase y el costructor de la instancia que pasas como parámetro.
+ * 
+ * --- la clave para construir esta CLASE INTERNA ANONIMA esta en la colocacion de dos llaves dentro del constructor;
+ *  -- ******** 'JSpinner spinner = new JSpinner(new SpinnerNumberModel(5,0,10,1){ ** CODIGO d clase inter ****      });    ****
+ *  
+ *          ANONIMA PORQUE NO TIENE NOMBRE.  PERO SI TIENE LLAVE DE APERTURA Y LLAVE DE CIERRE
+ *          
  * @author Usuario
  */
 public class Controles_JSpinner extends JFrame {
@@ -33,6 +38,18 @@ public class Controles_JSpinner extends JFrame {
 
     public class Lamina extends JPanel {
 
+        /*public Lamina() {
+        setLayout(new BorderLayout());
+        JPanel lamiJSpinner = new JPanel();
+        add(lamiJSpinner, BorderLayout.NORTH);
+
+        Dimension valor = new Dimension(100, 20);//-- para dar dimension al JSpinner.
+
+        JSpinner spinner = new JSpinner(new MiModeloJspinner());
+        spinner.setMaximumSize(valor);
+        spinner.setPreferredSize(valor); // -- valor es un objetoDimension para dar dimension al SPinner.
+        lamiJSpinner.add(spinner);
+        }*/
         public Lamina() {
             setLayout(new BorderLayout());
             JPanel lamiJSpinner = new JPanel();
@@ -40,28 +57,20 @@ public class Controles_JSpinner extends JFrame {
 
             Dimension valor = new Dimension(100, 20);//-- para dar dimension al JSpinner.
 
-            //SpinnerNumberModel model = new SpinnerNumberModel(5, 3, 11, 2);
+            JSpinner spinner = new JSpinner(new SpinnerNumberModel(5,0,10,1){ // CLASE INTERNA ANONIMA
+                        public Object getPreviousValue(){
+                            return super.getNextValue();
+                        }           
 
-            // -------------------  CONSTRUCTOR PARA  representar valores de tipo fecha.
-            // JSpinner spinner = new JSpinner(new SpinnerDateModel());
-            
-            // ------------------- CONSTRUCTOR PARA  representar valores de tipo lista.
-            // Array para anadir como para al 
-            //String[] lista ={"lunes ", "martes  ", "miercoles   ", "jueves  ", "viernes "};
-            //JSpinner spinner = new JSpinner( new SpinnerListModel(lista));
-            // ------ si el parametro de cons, es de tipo 'SpinnerNumberModel()' se puede ponerle limites.
-            
-            // ------------------- CONSTRUCTOR PARA  representar valores de tipo nuero.
-            // 1º parametro -> valorInicio, 2º parametro -> valorMinimo del SPinner,
-            // 3º parametro -> valorMaximo, 4º parametro -> nº de unidades que avanza.
-            //JSpinner spinner = new JSpinner(new SpinnerNumberModel(5, 3, 11, 2));
-            
-            JSpinner spinner = new JSpinner(new MiModeloJspinner());
+                        public Object getNextValue(){
+                            return super.getPreviousValue();                        
+                        }
+                    });
             spinner.setMaximumSize(valor);
             spinner.setPreferredSize(valor); // -- valor es un objetoDimension para dar dimension al SPinner.
             lamiJSpinner.add(spinner);
         }
-        
+
         /**
          * Cambiamos el incremento del botón que incrementa para que decremente
          * y viceversa. ,para ello tenemos que crear nuestro propio modelo
@@ -70,25 +79,24 @@ public class Controles_JSpinner extends JFrame {
          *
          * Tenemos que crear una clase para este modelo
          */
-        private class MiModeloJspinner extends SpinnerNumberModel {
-            //1º Establecemos en el constructor los valores que tendrá nuestro modelo.            
-            public MiModeloJspinner() {
-                super(5,0,11,1);
-            }            
-            //2º Buscamos en la cl SpinnerNumberModel algun mt que nos permita invertir este comportamiento.
-            // - getNextValue()' devuelve el valor siguiente que figura en el Spinner,
-            // - 'getPreviusValue()' devuelve el valor anterior al que figura en el Spinner
-            
-            public Object getPreviousValue(){
-                return super.getNextValue();
-            }           
-            public Object getNextValue(){
-                return super.getPreviousValue();                        
-            }
-            // 3º instanciamos esta clase en la cl Lamina
+        /* private class MiModeloJspinner extends SpinnerNumberModel {
+        //1º Establecemos en el constructor los valores que tendrá nuestro modelo.            
+        public MiModeloJspinner() {
+        super(5,0,11,1);
+        }            
+        //2º Buscamos en la cl SpinnerNumberModel algun mt que nos permita invertir este comportamiento.
+        // - getNextValue()' devuelve el valor siguiente que figura en el Spinner,
+        // - 'getPreviusValue()' devuelve el valor anterior al que figura en el Spinner
+
+        public Object getPreviousValue(){
+        return super.getNextValue();
+        }           
+        public Object getNextValue(){
+        return super.getPreviousValue();                        
         }
+        // 3º instanciamos esta clase en la cl Lamina
+        }*/
     }
 }
-
 
 
