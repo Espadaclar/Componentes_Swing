@@ -54,10 +54,41 @@ public class Controles_JSpinner extends JFrame {
             // ------------------- CONSTRUCTOR PARA  representar valores de tipo nuero.
             // 1º parametro -> valorInicio, 2º parametro -> valorMinimo del SPinner,
             // 3º parametro -> valorMaximo, 4º parametro -> nº de unidades que avanza.
-            JSpinner spinner = new JSpinner(new SpinnerNumberModel(5, 3, 11, 2));
+            //JSpinner spinner = new JSpinner(new SpinnerNumberModel(5, 3, 11, 2));
+            
+            JSpinner spinner = new JSpinner(new MiModeloJspinner());
             spinner.setMaximumSize(valor);
             spinner.setPreferredSize(valor); // -- valor es un objetoDimension para dar dimension al SPinner.
             lamiJSpinner.add(spinner);
         }
+        
+        /**
+         * Cambiamos el incremento del botón que incrementa para que decremente
+         * y viceversa. ,para ello tenemos que crear nuestro propio modelo
+         * SpinnerDateModel’ o ‘SpinnerListModel’ o SpinnerNumberModel’ no
+         * sirven.
+         *
+         * Tenemos que crear una clase para este modelo
+         */
+        private class MiModeloJspinner extends SpinnerNumberModel {
+            //1º Establecemos en el constructor los valores que tendrá nuestro modelo.            
+            public MiModeloJspinner() {
+                super(5,0,11,1);
+            }            
+            //2º Buscamos en la cl SpinnerNumberModel algun mt que nos permita invertir este comportamiento.
+            // - getNextValue()' devuelve el valor siguiente que figura en el Spinner,
+            // - 'getPreviusValue()' devuelve el valor anterior al que figura en el Spinner
+            
+            public Object getPreviousValue(){
+                return super.getNextValue();
+            }           
+            public Object getNextValue(){
+                return super.getPreviousValue();                        
+            }
+            // 3º instanciamos esta clase en la cl Lamina
+        }
     }
 }
+
+
+
