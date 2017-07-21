@@ -38,12 +38,10 @@ public class Deslizante_Slider  extends JFrame {
         private Font fuente;
         
         public Lamina(){
-
-
             setLayout(new BorderLayout());
             // --   PARA INDICAR LA ORIENTACION DEL Slaider EN EL CONS. UTILIZAR LA INTERFACE SwingConstants.
             // -- 2º para indica el comienzo, 3º para indica el final, 4º indica dode se situa el indicador.
-            desliza = new JSlider(SwingConstants.VERTICAL, 10, 50, 12);
+            desliza = new JSlider(SwingConstants.HORIZONTAL, 10, 50, 12);
             // -- CAMBIAMOS  LA FUENTE DEL Slider.
             desliza.setFont(new Font("Arial", Font.ITALIC, 12));
 
@@ -66,15 +64,14 @@ public class Deslizante_Slider  extends JFrame {
             add(texto);
 
             Oyente oyente = new Oyente();// -INSTANCIA  DE LA CL, OYENTE.
-            desliza.addChangeListener(oyente);
+            desliza.addChangeListener(oyente); // El mt addChangeListener(ChangeListener), -- pone el componente a la escucha de un 
+                                                //cambio en su estado  , el parámetro es una interface ‘ChangeListener’
         }
 
         private class Oyente implements ChangeListener{
-
             @Override
             public void stateChanged(ChangeEvent e) {
                 int valor = desliza.getValue();
-                System.out.println(valor);
                 texto.setFont(new Font("Serif", Font.PLAIN, valor));
             }
         }
