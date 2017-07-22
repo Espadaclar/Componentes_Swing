@@ -34,43 +34,123 @@ public class Menu extends JFrame
 
     public class Lamina extends JPanel {
 
+        private JTextArea texto;
+        private JScrollPane barra;
+        private Font fuente;
+        private JPanel lamiTexto;
+        
         public Lamina() {
-            setLayout(new BorderLayout());           
-            JPanel lamiMenu = new JPanel();
+            
+            setLayout(new BorderLayout()); 
+            JPanel lamiMenu = new JPanel();   
+            lamiTexto = new JPanel();
+            barra = new JScrollPane(lamiTexto);
+            
+            
             add(lamiMenu, BorderLayout.NORTH);
-
+            add(barra, BorderLayout.SOUTH);
+            
+            
+          
+            texto = new JTextArea(25, 50);
+            fuente = new Font("Serif", Font.BOLD, 13);
+            //texto.setFont(fuente);
+            lamiTexto.add(texto);
+            
+            
             JMenuBar barraMenu = new JMenuBar();// ------- BARRA PARA COLOCAR LOS ELEMENOS DE MENU.
-            JMenu archivo = new JMenu("Archivo");// -------ELEMENTO PARA COLOCAR EN LA BARRA.
-            JMenu edicion = new JMenu("Edicion");
-            JMenu insertar = new JMenu("Insertar");
-            JMenu herramientas = new JMenu("Herramientas");
-            JMenu opciones = new JMenu("Opciones");// ----- creado para formar una subclase detro del 'elemento' Archivo 
-            // - que cuelgan de los elementos que forman la barra
-            opciones.add(new JMenuItem("Opcion_1"));//---------------forma parte de la subclase "Opciones"
-            opciones.add(new JMenuItem("Opcion_2"));//---------------forma parte de la subclase "Opciones"
+            JMenu fuente = new JMenu("Fuente");// -------ELEMENTO PARA COLOCAR EN LA BARRA.
+            JMenu estilo = new JMenu("Estilo");
+            JMenu size = new JMenu("Size");
 
-            JMenuItem nuevo = new JMenuItem("Nuevo");// ---- OPCIONES PARA EL ELEMENTO ARCHIVO
-            JMenuItem abrir = new JMenuItem("Abrir");
-            JMenuItem guardar = new JMenuItem("Guardar");
-            JMenuItem guardarComo = new JMenuItem("Guardar como");
+            JMenuItem arial = new JMenuItem("Arial");
+            JMenuItem serif = new JMenuItem("Serif");
+            JMenuItem verdana = new JMenuItem("Verdana");
+         
+            barraMenu.add(fuente);// -------------------- ANADE  ELEMENTOS A LA BARRA.
+            barraMenu.add(estilo);
+            barraMenu.add(size);
+ 
+            fuente.add(arial);// ------- ANADE OPCIONES AL ELEMENTO FUENTE.
+            fuente.add(serif);
+            fuente.add(verdana);
+            //fuente.addSeparator();// ------------para que aparecca una linea separando a 'opiones'
 
-            barraMenu.add(archivo);// -------------------- ANADE  ELEMENTOS A LA BARRA.
-            barraMenu.add(edicion);
-            barraMenu.add(insertar);
-            barraMenu.add(herramientas);
+            JMenuItem negrita = new JMenuItem("Negrita");
+            JMenuItem normal = new JMenuItem("Normal");
+            estilo.add(negrita);// ------- ANADE OPCIONES AL ELEMENTO INSERTAR.
+            estilo.add(normal);
+            
+            JMenuItem diez = new JMenuItem("10");
+            JMenuItem catorce = new JMenuItem("14");
+            JMenuItem diezYocho = new JMenuItem("18");
+            size.add(diez);
+            size.add(catorce);
+            size.add(diezYocho);
+           
+            lamiMenu.add(barraMenu);//  ------------------- AGREGA LA BARRA A LA LAMINA
+            
+            Oyente oyente = new Oyente();
+            arial.addActionListener(oyente);
+            serif.addActionListener(oyente);
+            verdana.addActionListener(oyente);
+            
+           // negrita.addActionListener(oyente);
+            negrita.addActionListener(new ActionListener() {// ---CLASE ANONIMA EN VEZ DE LA CLASE INTERNA OYENTE
+                
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    texto.setFont(new Font("Arial", Font.BOLD, 13));
+                }
+            });
+            
+            normal.addActionListener(oyente);
+            
+            diez.addActionListener(oyente);
+            catorce.addActionListener(oyente);
+            diezYocho.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    texto.setFont(new Font("Arial", Font.PLAIN, 18));
+                }
+            });
+        }
+        
+        private class Oyente implements ActionListener{
 
-            archivo.add(nuevo);// ------- ANADE OPCIONES AL ELEMENTO ARCHIVO.
-            archivo.add(abrir);
-            archivo.add(guardar);
-            archivo.add(guardarComo);
-            archivo.addSeparator();// ------------para que aparecca una linea separando a 'opiones'
-            archivo.add(opciones);// ---------------------- lleva asociado una subclase 'menu que agrega otro menu.
-
-            insertar.add(new JMenuItem("Imagen"));// ------- ANADE OPCIONES AL ELEMENTO INSERTAR.
-            insertar.add(new JMenuItem("Tabla"));
-            insertar.add(new JMenuItem("Formas"));
-
-            lamiMenu.add(barraMenu);//  ------------------- AGREGA LA BARRA A LA LAMINA.
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String valor = e.getActionCommand();
+                
+                if(valor.equals("Arial")){
+                    texto.setFont(new Font("Arial", Font.PLAIN, 13));
+                }else if(valor.equals("Serif")){
+                    texto.setFont(new Font("Serif", Font.PLAIN, 13));
+                }else if(valor.equals("Verdana")){
+                    texto.setFont(new Font("Verdana", Font.PLAIN, 13));
+                }
+                
+               /* else if(valor.equals("Negrita")){
+                    texto.setFont(new Font("Arial", Font.BOLD, 13));
+                }*/
+                else if(valor.equals("Normal")){
+                    texto.setFont(new Font("Arial", Font.PLAIN, 13));
+                }else if(valor.equals("10")){
+                    texto.setFont(new Font("Arial", Font.PLAIN, 10));
+                }else if(valor.equals("14")){
+                    texto.setFont(new Font("Serif", Font.PLAIN, 14));
+                }
+                
+                /*else if(valor.equals("18")){
+                    texto.setFont(new Font("Arial", Font.PLAIN, 18));
+                }*/
+                
+                    
+                
+               // texto.setFont(new Font("Arial", Font.PLAIN, 13));
+                System.out.println(valor);
+            }      
         }
     }
 }
+
