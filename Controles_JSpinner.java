@@ -11,6 +11,8 @@ import javax.swing.event.*;
  * --- la clave para construir esta CLASE INTERNA ANONIMA esta en la colocacion de dos llaves dentro del constructor;
  *  -- ******** 'JSpinner spinner = new JSpinner(new SpinnerNumberModel(5,0,10,1){ ** CODIGO d clase inter ****      });    ****
  *  
+ *  --- EL  ** CODIGO d clase inter **** es el mismo que el d una clase no interna, pero sin el constructor y sin nombre de clase
+ *  
  *          ANONIMA PORQUE NO TIENE NOMBRE.  PERO SI TIENE LLAVE DE APERTURA Y LLAVE DE CIERRE
  *          
  * @author Usuario
@@ -57,7 +59,7 @@ public class Controles_JSpinner extends JFrame {
 
             Dimension valor = new Dimension(100, 20);//-- para dar dimension al JSpinner.
 
-            JSpinner spinner = new JSpinner(new SpinnerNumberModel(5,0,10,1){ // CLASE INTERNA ANONIMA
+            JSpinner spinner = new JSpinner(new SpinnerNumberModel(5,0,10,1){ //INICIO CLASE INTERNA ANONIMA
                         public Object getPreviousValue(){
                             return super.getNextValue();
                         }           
@@ -65,7 +67,7 @@ public class Controles_JSpinner extends JFrame {
                         public Object getNextValue(){
                             return super.getPreviousValue();                        
                         }
-                    });
+                    });// ---------------------------------------------------//FIN CLASE INTERNA ANONIMA
             spinner.setMaximumSize(valor);
             spinner.setPreferredSize(valor); // -- valor es un objetoDimension para dar dimension al SPinner.
             lamiJSpinner.add(spinner);
