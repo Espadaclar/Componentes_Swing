@@ -33,124 +33,63 @@ public class Menu extends JFrame
     }
 
     public class Lamina extends JPanel {
+        JPanel laminaN = new JPanel();//     para colocar la barra del menu.
+        JMenuBar barraM = new JMenuBar();//  barra del menu
+        JMenu fuent, tamano, stilo;
+        JTextPane texto = new JTextPane();// cuadro de texto
+        Font fuente = new Font(null);//      da formato al texto
 
-        private JTextArea texto;
-        private JScrollPane barra;
-        private Font fuente;
-        private JPanel lamiTexto;
-        
         public Lamina() {
-            
-            setLayout(new BorderLayout()); 
-            JPanel lamiMenu = new JPanel();   
-            lamiTexto = new JPanel();
-            barra = new JScrollPane(lamiTexto);
-            
-            
-            add(lamiMenu, BorderLayout.NORTH);
-            add(barra, BorderLayout.SOUTH);
-            
-            
-          
-            texto = new JTextArea(25, 50);
-            fuente = new Font("Serif", Font.BOLD, 13);
-            //texto.setFont(fuente);
-            lamiTexto.add(texto);
-            
-            
-            JMenuBar barraMenu = new JMenuBar();// ------- BARRA PARA COLOCAR LOS ELEMENOS DE MENU.
-            JMenu fuente = new JMenu("Fuente");// -------ELEMENTO PARA COLOCAR EN LA BARRA.
-            JMenu estilo = new JMenu("Estilo");
-            JMenu size = new JMenu("Size");
 
-            JMenuItem arial = new JMenuItem("Arial");
-            JMenuItem serif = new JMenuItem("Serif");
-            JMenuItem verdana = new JMenuItem("Verdana");
-         
-            barraMenu.add(fuente);// -------------------- ANADE  ELEMENTOS A LA BARRA.
-            barraMenu.add(estilo);
-            barraMenu.add(size);
- 
-            fuente.add(arial);// ------- ANADE OPCIONES AL ELEMENTO FUENTE.
-            fuente.add(serif);
-            fuente.add(verdana);
-            //fuente.addSeparator();// ------------para que aparecca una linea separando a 'opiones'
+            setLayout(new BorderLayout());
+            add(laminaN, BorderLayout.NORTH);
+            add(texto, BorderLayout.CENTER);
+            //texto.setFont(new Font("Arial", Font.PLAIN, 22));
+            laminaN.add(barraM);// -------------pone la barra dentro de una lamina.
 
-            JMenuItem negrita = new JMenuItem("Negrita");
-            JMenuItem normal = new JMenuItem("Normal");
-            estilo.add(negrita);// ------- ANADE OPCIONES AL ELEMENTO INSERTAR.
-            estilo.add(normal);
-            
-            JMenuItem diez = new JMenuItem("10");
-            JMenuItem catorce = new JMenuItem("14");
-            JMenuItem diezYocho = new JMenuItem("18");
-            size.add(diez);
-            size.add(catorce);
-            size.add(diezYocho);
-           
-            lamiMenu.add(barraMenu);//  ------------------- AGREGA LA BARRA A LA LAMINA
-            
-            Oyente oyente = new Oyente();
-            arial.addActionListener(oyente);
-            serif.addActionListener(oyente);
-            verdana.addActionListener(oyente);
-            
-           // negrita.addActionListener(oyente);
-            negrita.addActionListener(new ActionListener() {// ---CLASE ANONIMA EN VEZ DE LA CLASE INTERNA OYENTE
-                
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    texto.setFont(new Font("Arial", Font.BOLD, 13));
-                }
-            });
-            
-            normal.addActionListener(oyente);
-            
-            diez.addActionListener(oyente);
-            catorce.addActionListener(oyente);
-            diezYocho.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    texto.setFont(new Font("Arial", Font.PLAIN, 18));
-                }
-            });
-        }
-        
-        private class Oyente implements ActionListener{
+            fuent = new JMenu("Fuente");           
+            stilo = new JMenu("Stilo");
+            tamano = new JMenu("Tamaño");
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String valor = e.getActionCommand();
-                
-                if(valor.equals("Arial")){
-                    texto.setFont(new Font("Arial", Font.PLAIN, 13));
-                }else if(valor.equals("Serif")){
-                    texto.setFont(new Font("Serif", Font.PLAIN, 13));
-                }else if(valor.equals("Verdana")){
-                    texto.setFont(new Font("Verdana", Font.PLAIN, 13));
-                }
-                
-               /* else if(valor.equals("Negrita")){
-                    texto.setFont(new Font("Arial", Font.BOLD, 13));
-                }*/
-                else if(valor.equals("Normal")){
-                    texto.setFont(new Font("Arial", Font.PLAIN, 13));
-                }else if(valor.equals("10")){
-                    texto.setFont(new Font("Arial", Font.PLAIN, 10));
-                }else if(valor.equals("14")){
-                    texto.setFont(new Font("Serif", Font.PLAIN, 14));
-                }
-                
-                /*else if(valor.equals("18")){
-                    texto.setFont(new Font("Arial", Font.PLAIN, 18));
-                }*/
-                
-                    
-                
-               // texto.setFont(new Font("Arial", Font.PLAIN, 13));
-                System.out.println(valor);
-            }      
+            barraM.add(fuent);
+            barraM.add(stilo);
+            barraM.add(tamano);
+            configuraMenu("Arial", "fuent", "Arial", Font.PLAIN, 15);
+            configuraMenu("Bernard MT Condensed", "fuent", "Bernard MT Condensed", Font.PLAIN, 15);
+            configuraMenu("Lucida Handwriting", "fuent", "Lucida Handwriting", Font.PLAIN, 15);
+
+            configuraMenu("Negrita", "stilo", "Bernard MT Condensed", Font.BOLD, 15);
+            configuraMenu("Normal", "stilo", "Lucida Handwriting", Font.PLAIN, 15);
+
+            configuraMenu("18", "tamano", "Arial", Font.PLAIN, 18);
+            configuraMenu("25", "tamano", "Bernard MT Condensed", Font.PLAIN, 25);
+            configuraMenu("10", "tamano", "Lucida Handwriting", Font.PLAIN, 10);
+        } 
+
+        /**
+         * @param rotulo   ----nombre de subclase del elemento de la barra
+         * @param menu    -----nombre del elemento de la barra
+         * @param nameFont   - Nombre del tipo de letra que se asigna al texto.
+         * @param stilo      - Estilo que toma cada tipo de letra, negrita, cursiva etc
+         * @param size       - Tamano de la letra. 
+         */
+        public void configuraMenu(String rotulo, String menu, String nameFont, int stil, int size){
+
+            JMenuItem elemento_menu = new JMenuItem(rotulo);
+            // -- 'elemento_menu' SE ASINA A LA PESTANA DE LA BARRA ESPECIFICADA EN EL 2º PARAMETRO.
+            if(menu == "fuent"){
+                fuent.add(elemento_menu);
+            }else if(menu == "stilo"){
+                stilo.add(elemento_menu);
+            }else if(menu == "tamano"){
+                tamano.add(elemento_menu);
+            }
+            elemento_menu.addActionListener(new ActionListener() { // ----- CLASE INTERNA ANONIMA.
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        texto.setFont(new Font(nameFont, stil, size));
+                    }
+                });                    
         }
     }
 }
-
