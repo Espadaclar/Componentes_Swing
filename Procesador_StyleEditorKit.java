@@ -31,7 +31,7 @@ public class Procesador_StyleEditorKit extends JFrame
         JTextPane texto = new JTextPane();// cuadro de texto
         Font fuente = new Font(null);//      da formato al texto
 
-        private int zzz;
+        private int z;
         
         public Lamina() {
             setLayout(new BorderLayout());
@@ -47,16 +47,18 @@ public class Procesador_StyleEditorKit extends JFrame
             barraM.add(fuent);
             barraM.add(stilo);
             barraM.add(tamano);
-            configuraMenu("Arial", "fuent", "Arial", 9, 1);// solo tiene que modificar el tipo de letra.
-            configuraMenu("Bell MT", "fuent", "Bell MT", 9, 1);
-            configuraMenu("Lucida Handwriting", "fuent", "Lucida Handwriting", 9, 1);
+            configuraMenu("Arial", "fuent", "Arial", 9, z);// solo tiene que modificar el tipo de letra.
+            configuraMenu("Bell MT", "fuent", "Bell MT", 9, z);
+            configuraMenu("Lucida Handwriting", "fuent", "Lucida Handwriting", 9, z);
 
-            configuraMenu("Negrita", "stilo", " ", Font.BOLD, 1);// solo tiene que modificar el stilo.
-            configuraMenu("Cursiva", "stilo", " ", Font.ITALIC, 1);
+            configuraMenu("Negrita", "stilo", " ", Font.BOLD, z);// solo tiene que modificar el stilo.
+            configuraMenu("Cursiva", "stilo", " ", Font.ITALIC, z);
 
-            configuraMenu("18", "tamano", " ", 9, 18);// solo tiene que modificar el tamano.
-            configuraMenu("25", "tamano", " ", 9, 25);//  el 9 e nada
-            configuraMenu("10", "tamano", " ", 9, 10);
+            configuraMenu("18", "tamano", " ", 9, 18);
+            configuraMenu("25", "tamano", " ", 9, 25);// solo tiene que modificar el tamano.
+            configuraMenu("30", "tamano", " ", 9, 30);//  el 9 e nada
+            configuraMenu("35", "tamano", " ", 9, 35);//  el 9 e nada
+            
         } 
 
         /**
@@ -67,7 +69,7 @@ public class Procesador_StyleEditorKit extends JFrame
          * @param tam       - Tamano de la letra. 
          */
         public void configuraMenu(String rotulo, String menu, String tipo_letra, int est, int tam){
-            zzz = tam;
+            z = tam;
             JMenuItem elemento_menu = new JMenuItem(rotulo);
             // -- 'elemento_menu' SE ASINA A LA PESTANA DE LA BARRA ESPECIFICADA EN EL 2º PARAMETRO.
             if(menu == "fuent"){
@@ -91,7 +93,7 @@ public class Procesador_StyleEditorKit extends JFrame
             }else if(menu == "tamano"){
                 tamano.add(elemento_menu);
             }
-            elemento_menu.addActionListener(new  StyledEditorKit.FontSizeAction("adfaa", tam));
+            elemento_menu.addActionListener(new  StyledEditorKit.FontSizeAction("adfaa", z));
         }
     }
 }
