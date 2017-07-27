@@ -45,7 +45,10 @@ public class Procesador_StyleEditorKit extends JFrame
         private ButtonGroup group2;
         private JRadioButtonMenuItem radio2;
 
+        private JPopupMenu emerge;
         public Lamina() {
+
+            emerge = new JPopupMenu();
             group = new ButtonGroup();
             setLayout(new BorderLayout());
             add(laminaN, BorderLayout.NORTH);
@@ -68,16 +71,17 @@ public class Procesador_StyleEditorKit extends JFrame
             creaFuenteJRadioButtonMenuItem("Bell MT", "../iconos/copiar.gif");
             creaFuenteJRadioButtonMenuItem("Lucida Handwriting", "../iconos/copiar.gif");
 
-            //configuraMenu("Negrita", "stilo", " ", Font.BOLD, z, "");// solo tiene que modificar el stilo.
-            //configuraMenu("Cursiva", "stilo", " ", Font.ITALIC, z, "");
-            JCheckBoxMenuItem negrita = new JCheckBoxMenuItem("Negrita", new ImageIcon("../iconos/azul.gif") );
+            configuraMenu("Negrita", "stilo", " ", Font.BOLD, z, "");// solo tiene que modificar el stilo.
+            configuraMenu("Cursiva", "stilo", " ", Font.ITALIC, z, "");
+            /*JCheckBoxMenuItem negrita = new JCheckBoxMenuItem("Negrita", new ImageIcon("../iconos/azul.gif") );
             JCheckBoxMenuItem cursiva = new JCheckBoxMenuItem("Cursiva", new ImageIcon("../iconos/amarillo.gif"));
 
             negrita.addActionListener(new StyledEditorKit.BoldAction());
             cursiva.addActionListener(new StyledEditorKit.ItalicAction());
 
             stilo.add(negrita);
-            stilo.add(cursiva);
+            stilo.add(cursiva);*/
+
             //JRadioButtonMenuItem radio = new JRadioButtonMenuItem("Cursiva", new ImageIcon("../iconos/lucida.gif"));
             //group.add(radio);
 
@@ -90,43 +94,48 @@ public class Procesador_StyleEditorKit extends JFrame
             creaTamanoJRadioButtonMenuItem("25", "../iconos/cortar.gif", 25 );
             creaTamanoJRadioButtonMenuItem("30", "../iconos/cortar.gif", 30 );
             creaTamanoJRadioButtonMenuItem("35", "../iconos/cortar.gif", 35 );
+
+            etiquetaEmergente("Negrita");
+            etiquetaEmergente("Cursiva");
         } 
-        // 
-        //         /**
-        //          * @param rotulo   ----nombre de subclase del elemento de la barra
-        //          * @param menu    -----nombre del elemento de la barra
-        //          * @param tipo_letra   - Nombre del tipo de letra que se asigna al texto.
-        //          * @param est      - Estilo que toma cada tipo de letra, negrita, cursiva etc
-        //          * @param tam       - Tamano de la letra. 
-        //          */
-        //         public void configuraMenu(String rotulo, String menu, String tipo_letra, int est, int tam, String icon){
-        //             z = tam;
-        //             JMenuItem elemento_menu = new JMenuItem(rotulo, new ImageIcon(icon));
-        // 
-        //             // -- 'elemento_menu' SE ASINA A LA PESTANA DE LA BARRA ESPECIFICADA EN EL 2º PARAMETRO.
-        //             if(menu == "fuent"){
-        //                 fuent.add(elemento_menu);
-        //                 if(tipo_letra == "Lucida Handwriting"){
-        //                     elemento_menu.addActionListener(new StyledEditorKit.FontFamilyAction("adfaa", "Lucida Handwriting"));
-        //                 }else if(tipo_letra == "Arial"){
-        //                     elemento_menu.addActionListener(new StyledEditorKit.FontFamilyAction("gagaga", "Arial"));
-        //                 }else if(tipo_letra == "Bell MT"){
-        //                     elemento_menu.addActionListener(new StyledEditorKit.FontFamilyAction("gagaga", "Bell MT"));
-        //                 }
-        //             }/*else if(menu == "stilo"){
-        //             stilo.add(elemento_menu);             
-        //             if(est == Font.BOLD){                    
-        //             elemento_menu.addActionListener(new StyledEditorKit.BoldAction());
-        //             }
-        //             else if(est == Font.ITALIC){
-        //             elemento_menu.addActionListener(new StyledEditorKit.ItalicAction());
-        //             }                
-        //             }else if(menu == "tamano"){
-        //             tamano.add(elemento_menu);
-        //             }
-        //             elemento_menu.addActionListener(new  StyledEditorKit.FontSizeAction("adfaa", z));*/
-        // 
-        //         }
+
+        /**
+         * @param rotulo   ----nombre de subclase del elemento de la barra
+         * @param menu    -----nombre del elemento de la barra
+         * @param tipo_letra   - Nombre del tipo de letra que se asigna al texto.
+         * @param est      - Estilo que toma cada tipo de letra, negrita, cursiva etc
+         * @param tam       - Tamano de la letra. 
+         */
+        public void configuraMenu(String rotulo, String menu, String tipo_letra, int est, int tam, String icon){
+            z = tam;
+            JMenuItem elemento_menu = new JMenuItem(rotulo, new ImageIcon(icon));
+
+            // -- 'elemento_menu' SE ASINA A LA PESTANA DE LA BARRA ESPECIFICADA EN EL 2º PARAMETRO.
+            /*if(menu == "fuent"){
+                fuent.add(elemento_menu);
+                if(tipo_letra == "Lucida Handwriting"){
+                    elemento_menu.addActionListener(new StyledEditorKit.FontFamilyAction("adfaa", "Lucida Handwriting"));
+                }else if(tipo_letra == "Arial"){
+                    elemento_menu.addActionListener(new StyledEditorKit.FontFamilyAction("gagaga", "Arial"));
+                }else if(tipo_letra == "Bell MT"){
+                    elemento_menu.addActionListener(new StyledEditorKit.FontFamilyAction("gagaga", "Bell MT"));
+                }
+            }*/
+           if(menu == "stilo"){
+                stilo.add(elemento_menu);             
+                if(est == Font.BOLD){                    
+                    elemento_menu.addActionListener(new StyledEditorKit.BoldAction());
+                }
+                else if(est == Font.ITALIC){
+                    elemento_menu.addActionListener(new StyledEditorKit.ItalicAction());
+                }                
+            }
+            /*else if(menu == "tamano"){
+                tamano.add(elemento_menu);
+            }
+            elemento_menu.addActionListener(new  StyledEditorKit.FontSizeAction("adfaa", z));*/
+
+        }
 
         public void creaTamanoJRadioButtonMenuItem(String text, String icono, int tam){
             z = tam;
@@ -142,6 +151,21 @@ public class Procesador_StyleEditorKit extends JFrame
             fuent.add(radio);
             group.add(radio);
         }
-    }
 
+        /**
+         * Crea etiquetas para menuEmergente, tambien gestiona el evento que realiza.
+         * @param name nombre de la etiqueta. 
+         */
+        public void etiquetaEmergente(String name){
+
+            JMenuItem element = new JMenuItem(name); // ELEMENTO QUE APARECE EN EL MENU EMERGENTE.
+            emerge.add(element); // ----------------LO ANADIMOS A 'emerge = new JPopupMenu();'
+            texto.setComponentPopupMenu(emerge);//  APLICAMOS EL MT set..(..) al objeto en el que actuará
+            if(name.equals("Negrita")){ // --------- APLICAMOS EL GESTOR DE EVENTOS
+                element.addActionListener(new StyledEditorKit.BoldAction());
+            }else if(name.equals("Cursiva")){
+                element.addActionListener(new StyledEditorKit.ItalicAction());
+            }
+        }
+    }
 }
