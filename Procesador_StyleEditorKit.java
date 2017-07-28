@@ -4,11 +4,15 @@ import java.awt.event.*;
 import javax.swing.event.*;
 import javax.swing.text.*;
 /**
- * StyledEditorKit  Clase paraa manejar el texto que hay dentro de un componente Swing de forma muy sencilla.
- *1º permite cambiar las caracteristicas del texto seleccionado.
- *2º quitar la negrita o la cursiva si pulsamos una segunda vez.
- *En la api vemos que dispone de varias cl, internas. 'StyledEditorKit.FontFamilyAction', 'new StyledEditorKit.BoldAction()'
- * de sencilla utilizacion como se ve en el mt 'configuraMenu(String rotulo, String menu, String tipo_letra, int est, int tam)'
+ * -------Atajos de Teclado,  la cl ’JmenuIten’ dispone del mt,  ‘setAccelerator(KeyStroke keyStrokd)’  para realizar 
+ * acciones  de teclado.  Pide como parámetro un objeto de tipo ‘KeyStroke’. y en esta cl tenemos el mt; 
+ * 'getKeyStroke(int keyCode, int modifiers)'   El parámetro KeyCode - especifica el código numérico para una clave
+ * del teclado, cada tecla tiene un nº asignad.
+ * El parám Modificadores - una combinación de cualquier modificador (Ctrl, Alt, Ins …) tiene un nº asignado.
+ * 
+ * Para ver la informacion de estas variables tenemos que ver la información que aporta el mt, getKeyStroke al final.
+ * En  " See Also " 
+ * -----------------------Codigo en líneas 101 y 106.
  */
 public class Procesador_StyleEditorKit extends JFrame
 {
@@ -63,9 +67,6 @@ public class Procesador_StyleEditorKit extends JFrame
             barraM.add(fuent);
             barraM.add(stilo);
             barraM.add(tamano);
-            /* configuraMenu("Arial", "fuent", "Arial", 9, z, "../iconos/arial.gif");// solo tiene que modificar el tipo de letra.
-            configuraMenu("Bell MT", "fuent", "Bell MT", 9, z, "../iconos/bel.gif");
-            configuraMenu("Lucida Handwriting", "fuent", "Lucida Handwriting", 9, z, "../iconos/lucida.gif");*/
 
             creaFuenteJRadioButtonMenuItem("Arial", "../iconos/copiar.gif");
             creaFuenteJRadioButtonMenuItem("Bell MT", "../iconos/copiar.gif");
@@ -73,22 +74,6 @@ public class Procesador_StyleEditorKit extends JFrame
 
             configuraMenu("Negrita", "stilo", " ", Font.BOLD, z, "");// solo tiene que modificar el stilo.
             configuraMenu("Cursiva", "stilo", " ", Font.ITALIC, z, "");
-            /*JCheckBoxMenuItem negrita = new JCheckBoxMenuItem("Negrita", new ImageIcon("../iconos/azul.gif") );
-            JCheckBoxMenuItem cursiva = new JCheckBoxMenuItem("Cursiva", new ImageIcon("../iconos/amarillo.gif"));
-
-            negrita.addActionListener(new StyledEditorKit.BoldAction());
-            cursiva.addActionListener(new StyledEditorKit.ItalicAction());
-
-            stilo.add(negrita);
-            stilo.add(cursiva);*/
-
-            //JRadioButtonMenuItem radio = new JRadioButtonMenuItem("Cursiva", new ImageIcon("../iconos/lucida.gif"));
-            //group.add(radio);
-
-            /*configuraMenu("18", "tamano", " ", 9, 18, "");
-            configuraMenu("25", "tamano", " ", 9, 25, "");// solo tiene que modificar el tamano.
-            configuraMenu("30", "tamano", " ", 9, 30, "");//  el 9 e nada
-            configuraMenu("35", "tamano", " ", 9, 35, "");//  el 9 e nada*/
 
             creaTamanoJRadioButtonMenuItem("18", "../iconos/cortar.gif", 18 );
             creaTamanoJRadioButtonMenuItem("25", "../iconos/cortar.gif", 25 );
@@ -110,18 +95,7 @@ public class Procesador_StyleEditorKit extends JFrame
             z = tam;
             JMenuItem elemento_menu = new JMenuItem(rotulo, new ImageIcon(icon));
 
-            // -- 'elemento_menu' SE ASINA A LA PESTANA DE LA BARRA ESPECIFICADA EN EL 2º PARAMETRO.
-            /*if(menu == "fuent"){
-                fuent.add(elemento_menu);
-                if(tipo_letra == "Lucida Handwriting"){
-                    elemento_menu.addActionListener(new StyledEditorKit.FontFamilyAction("adfaa", "Lucida Handwriting"));
-                }else if(tipo_letra == "Arial"){
-                    elemento_menu.addActionListener(new StyledEditorKit.FontFamilyAction("gagaga", "Arial"));
-                }else if(tipo_letra == "Bell MT"){
-                    elemento_menu.addActionListener(new StyledEditorKit.FontFamilyAction("gagaga", "Bell MT"));
-                }
-            }*/
-           if(menu == "stilo"){
+            if(menu == "stilo"){
                 stilo.add(elemento_menu);             
                 if(est == Font.BOLD){  
                     // --- atajo de teclado para poner en negrita el texto seleccionado.
@@ -134,11 +108,6 @@ public class Procesador_StyleEditorKit extends JFrame
                     elemento_menu.addActionListener(new StyledEditorKit.ItalicAction());
                 }                
             }
-            /*else if(menu == "tamano"){
-                tamano.add(elemento_menu);
-            }
-            elemento_menu.addActionListener(new  StyledEditorKit.FontSizeAction("adfaa", z));*/
-
         }
 
         public void creaTamanoJRadioButtonMenuItem(String text, String icono, int tam){
