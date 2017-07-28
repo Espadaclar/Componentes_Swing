@@ -123,10 +123,14 @@ public class Procesador_StyleEditorKit extends JFrame
             }*/
            if(menu == "stilo"){
                 stilo.add(elemento_menu);             
-                if(est == Font.BOLD){                    
+                if(est == Font.BOLD){  
+                    // --- atajo de teclado para poner en negrita el texto seleccionado.
+                    elemento_menu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK));
                     elemento_menu.addActionListener(new StyledEditorKit.BoldAction());
                 }
                 else if(est == Font.ITALIC){
+                    // --- atajo de teclado para poner en cursiva el texto seleccionado.
+                    elemento_menu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_K, InputEvent.CTRL_DOWN_MASK));
                     elemento_menu.addActionListener(new StyledEditorKit.ItalicAction());
                 }                
             }
